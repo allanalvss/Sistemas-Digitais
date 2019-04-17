@@ -1,0 +1,20 @@
+-- IFPB 02/04/2019
+-- Sistemas Digitais
+-- bloco de operacoes 
+
+entity addint is 
+port (a,b: in integer range 0 to 255;
+		s: out integer range 0 to 255);
+end addint;
+
+
+architecture arq of addint is
+
+begin
+s<=a+b; 				--adicao
+--s<=a*b;	 		--multiplicacao	
+--s<=a-b; 			--subtraçao
+--s<=a/b;			--divisao
+end arq;
+		
+		
