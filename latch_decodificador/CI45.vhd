@@ -1,4 +1,6 @@
-
+-- 07/05/2019
+-- Sistemas Digitais
+-- decodificador display de 7 segmentos
 
 library ieee;
 use ieee.std_logic_1164.all;
