@@ -1,46 +1,41 @@
--- test cd4511
--- 07/05/2019
+-- test para decodificador 
+ 
 library ieee;
 use ieee.std_logic_1164.all;
 
-entity test is
+entity test is 
 end test;
 
-architecture test of test is
 
-component cd4511 is
-	port(d: in std_logic_vector(3 downto 0);
-	     n_LE,n_BL,n_LT: in std_logic;
-		  disp: out std_logic_vector(6 downto 0));
+architecture sim of test is 
+
+
+component CI45 is
+generic(n:integer:=4); 
+port(d:in std_logic_vector(n-1 downto 0);
+	  LE_bar,BL_bar,LT_bar:in std_logic;
+	  display:out std_logic_vector((2*n)-2 downto 0));
 end component;
 
-signal d: std_logic_vector(3 downto 0);
-signal n_LE,n_BL,n_LT: std_logic;
-signal disp: std_logic_vector(6 downto 0);
+signal d_input:std_logic_vector(3 downto 0);
+signal LE,BL,LT:std_logic;
+signal display:std_logic_vector(6 downto 0);
+begin 
 
-begin
+x: CI45 port map(d_input,LE,BL,LT,display);
 
-x: cd4511 port map(d,n_LE,n_BL,n_LT,disp);
+d_input <= "0101",
+           "0010" after 70 ns,
+	        "1000" after 90 ns,
+	        "0000" after 110 ns,
+			  "0001" after 120 ns;
+LE <=   '0';
+		  
+BL <=   '0',
+		  '1' after 70 ns;
+		  
+LT <=   '1';
 
-d <= "0101",
-     "0111" after 70 ns,
-	  "1001" after 90 ns,
-	  "0000" after 110 ns;
 
-n_BL <= '1',
-        '0' after 20 ns,
-		  '1' after 30 ns,
-		  '1' after 110 ns;
 
-n_LT <= '1',
-        '0' after 40 ns,
-		  '1' after 50 ns,
-		  '1' after 110 ns;
-
-n_LE <= '1',
-        '0' after 60 ns,
-		  '1' after 75 ns,
-		  '1' after 110 ns;
-	  
-
-end test;
+end sim;
