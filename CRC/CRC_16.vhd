@@ -1,5 +1,3 @@
-
-
 library ieee;
 use ieee.std_logic_1164.all;
 
@@ -28,11 +26,13 @@ crc<="0000000000000000";
 elsif(clk'event and clk='0')then
 
 crc(0)<= ser_in xor crc(15);
-crc(2)<= crc(1) xor crc(15);
-crc(14)<=crc(13) xor crc(15);
---- deslocando os bits
-crc(15 downto 1)<=crc(14 downto 0);
 
+crc(2)<= crc(1) xor crc(15);
+
+crc(15)<=crc(14) xor crc(15);
+--- deslocando os bits
+crc(14 downto 3)<= crc(13 downto 2);
+crc(1)<=crc(0);
 end if;
 
 end process;
