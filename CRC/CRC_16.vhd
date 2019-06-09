@@ -29,10 +29,11 @@ crc(0)<= ser_in xor crc(15);
 
 crc(2)<= crc(1) xor crc(15);
 
-crc(15)<=crc(14) xor crc(15);
+crc(15) <= crc(14) xor crc(15);
 --- deslocando os bits
 crc(14 downto 3)<= crc(13 downto 2);
 crc(1)<=crc(0);
+
 end if;
 
 end process;
