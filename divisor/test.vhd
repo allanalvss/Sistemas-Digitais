@@ -1,46 +1,56 @@
- -- test divisor
- -- 28/05/2019
- 
- 
- library ieee;
- use ieee.std_logic_1164.all;
- 
- 
- entity test is 
- generic(n:integer:=8);
- end test;
- 
- 
- architecture sim of test is 
- component div is 
-	 port(A,B:in std_logic_vector(n-1 downto 0);
+
+ -- 28/05/19
+-- testbench divisor
+
+
+library ieee;
+use ieee.std_logic_1164.all;
+
+entity test is
+end test;
+
+architecture sim of test is
+
+
+
+component divisor is 
+generic(size:integer:=8);
+port(a,b:in std_logic_vector(size-1 downto 0);
 	  clk,reset:in std_logic;
-	  resto,resultado:out std_logic_vector(n-1 downto 0);
+	  resto,resultado:out std_logic_vector(size-1 downto 0);
 	  ready:out std_logic);
 end component;
- 
- 
- signal A,B:std_logic_vector(n-1 downto 0);
- signal clk,reset:std_logic;
- signal resto,resultado:std_logic_vector(n-1 downto 0);
- signal ready:std_logic;
- begin
- 
- x: div port map (A,B,clk,reset,resto,resultado,ready);
- 
- process
- 
+
+
+signal A,B: std_logic_vector(7 downto 0);
+signal clk,reset: std_logic:='0';
+signal resto,res: std_logic_vector(7 downto 0):="00000000";
+signal ready: std_logic:='0';
+
 begin
 
-reset <='1';
+x: divisor port map (A,B,clk,reset,resto,res,ready);
 
+A <= "00001000";
+B <= "00000010";
+
+process
+begin
+
+reset <= '1';
+wait for 10 ns;
+reset <= '0';
 wait for 10 ns;
 
-reset <='0';
+for i in 10 downto 0 loop
+	clk <= '1';
+	wait for 20 ns;
+	clk <= '0';
+	wait for 20 ns;
+end loop;
 
+wait;
 
- 
- end process;
- 
- 
- end sim;
+end process;
+
+end sim;
