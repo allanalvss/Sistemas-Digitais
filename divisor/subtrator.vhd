@@ -23,7 +23,7 @@ signal sel:std_logic_vector(n-1 downto 0);
 signal carry: std_logic_vector (n downto 0);
 begin
 
-laco: for i in 0 to 3 generate
+laco: for i in 0 to n-1 generate
 sel(i)<=b(i) xor M;
 end generate;
 
